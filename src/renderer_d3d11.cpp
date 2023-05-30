@@ -363,6 +363,7 @@ namespace bgfx { namespace d3d11
 	static D3D11_INPUT_ELEMENT_DESC* fillVertexLayout(uint8_t _stream, D3D11_INPUT_ELEMENT_DESC* _out, const VertexLayout& _layout)
 	{
 		D3D11_INPUT_ELEMENT_DESC* elem = _out;
+		D3D11_INPUT_ELEMENT_DESC* prev = _out;
 
 		for (uint32_t attr = 0; attr < Attrib::Count; ++attr)
 		{
@@ -374,7 +375,15 @@ namespace bgfx { namespace d3d11
 
 				if (0 == _layout.m_attributes[attr])
 				{
-					elem->AlignedByteOffset = 0;
+                    if (prev == _out)
+					{
+						elem->AlignedByteOffset = 0;
+					}
+					else
+					{
+						elem->AlignedByteOffset = prev->AlignedByteOffset;
+						elem->Format = prev->Format;
+					}
 				}
 				else
 				{
@@ -385,6 +394,7 @@ namespace bgfx { namespace d3d11
 					_layout.decode(Attrib::Enum(attr), num, type, normalized, asInt);
 					elem->Format = s_attribType[type][num-1][normalized];
 					elem->AlignedByteOffset = _layout.m_offset[attr];
+					prev = elem;
 				}
 
 				++elem;
