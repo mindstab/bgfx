@@ -1097,6 +1097,12 @@ namespace bgfx
 			, uint32_t _rgba = 0
 			);
 
+		/// Set depth bias.
+		///
+		void setDepthBias(
+			  int8_t _depth_bias
+			);
+
 		/// Set condition for rendering.
 		///
 		/// @param[in] _handle Occlusion query handle.
@@ -3584,6 +3590,12 @@ namespace bgfx
 	void setState(
 		  uint64_t _state
 		, uint32_t _rgba = 0
+		);
+		
+	/// Set depth bias.
+	///
+	void setDepthBias(
+		  int8_t _depth_bias
 		);
 
 	/// Set condition for rendering.

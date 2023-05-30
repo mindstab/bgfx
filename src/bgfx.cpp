@@ -3667,6 +3667,10 @@ namespace bgfx
 		BGFX_ENCODER(setState(_state, _rgba) );
 	}
 
+	void Encoder::setDepthBias(int8_t _depth_bias) {
+		BGFX_ENCODER(setDepthBias(_depth_bias));
+	}
+
 	void Encoder::setCondition(OcclusionQueryHandle _handle, bool _visible)
 	{
 		BGFX_CHECK_CAPS(BGFX_CAPS_OCCLUSION_QUERY, "Occlusion query is not supported!");
@@ -5295,6 +5299,11 @@ namespace bgfx
 	{
 		BGFX_CHECK_ENCODER0();
 		s_ctx->m_encoder0->setState(_state, _rgba);
+	}
+	
+	void setDepthBias(int8_t _depth_bias) {
+		BGFX_CHECK_ENCODER0();
+		s_ctx->m_encoder0->setDepthBias(_depth_bias);
 	}
 
 	void setCondition(OcclusionQueryHandle _handle, bool _visible)
