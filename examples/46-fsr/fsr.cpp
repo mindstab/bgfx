@@ -112,6 +112,7 @@ struct FsrResources
 				, false
 				, 1
 				, bgfx::TextureFormat::RGBA16F
+				, 0
 				, BGFX_TEXTURE_COMPUTE_WRITE | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 				);
 			bgfx::setName(m_easuTexture16F, "easuTexture16F");
@@ -122,6 +123,7 @@ struct FsrResources
 				, false
 				, 1
 				, bgfx::TextureFormat::RGBA16F
+				, 0
 				, BGFX_TEXTURE_COMPUTE_WRITE | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 				);
 			bgfx::setName(m_rcasTexture16F, "rcasTexture16F");
@@ -133,6 +135,7 @@ struct FsrResources
 			, false
 			, 1
 			, bgfx::TextureFormat::RGBA32F
+			, 0
 			, BGFX_TEXTURE_COMPUTE_WRITE | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 			);
 		bgfx::setName(m_easuTexture32F, "easuTexture32F");
@@ -143,6 +146,7 @@ struct FsrResources
 			, false
 			, 1
 			, bgfx::TextureFormat::RGBA32F
+			, 0
 			, BGFX_TEXTURE_COMPUTE_WRITE | BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 			);
 		bgfx::setName(m_rcasTexture32F, "rcasTexture32F");

@@ -147,7 +147,7 @@ struct RenderTarget
 {
 	void init(uint32_t _width, uint32_t _height, bgfx::TextureFormat::Enum _format, uint64_t _flags)
 	{
-		m_texture = bgfx::createTexture2D(uint16_t(_width), uint16_t(_height), false, 1, _format, _flags);
+		m_texture = bgfx::createTexture2D(uint16_t(_width), uint16_t(_height), false, 1, _format, 0, _flags);
 		const bool destroyTextures = true;
 		m_buffer = bgfx::createFrameBuffer(1, &m_texture, destroyTextures);
 	}
@@ -798,8 +798,8 @@ public:
 			| BGFX_SAMPLER_V_CLAMP
 			;
 
-		m_frameBufferTex[FRAMEBUFFER_RT_COLOR] = bgfx::createTexture2D(uint16_t(m_size[0]), uint16_t(m_size[1]), false, 1, bgfx::TextureFormat::RGBA16F, bilinearFlags);
-		m_frameBufferTex[FRAMEBUFFER_RT_DEPTH] = bgfx::createTexture2D(uint16_t(m_size[0]), uint16_t(m_size[1]), false, 1, bgfx::TextureFormat::D32F,    bilinearFlags);
+		m_frameBufferTex[FRAMEBUFFER_RT_COLOR] = bgfx::createTexture2D(uint16_t(m_size[0]), uint16_t(m_size[1]), false, 1, bgfx::TextureFormat::RGBA16F, 0, bilinearFlags);
+		m_frameBufferTex[FRAMEBUFFER_RT_DEPTH] = bgfx::createTexture2D(uint16_t(m_size[0]), uint16_t(m_size[1]), false, 1, bgfx::TextureFormat::D32F,    0, bilinearFlags);
 		m_frameBuffer = bgfx::createFrameBuffer(BX_COUNTOF(m_frameBufferTex), m_frameBufferTex, true);
 
 		m_linearDepth.init(m_size[0], m_size[1], bgfx::TextureFormat::R16F, bilinearFlags);
@@ -962,6 +962,7 @@ public:
 		// hoping texture deals with mem
 		m_bokehTexture = bgfx::createTexture2D(bokehSize, bokehSize, false, 1
 			, bgfx::TextureFormat::BGRA8
+			, 0
 			, 0
 			| BGFX_SAMPLER_MIN_POINT
 			| BGFX_SAMPLER_MIP_POINT

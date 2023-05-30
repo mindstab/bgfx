@@ -454,28 +454,28 @@ BGFX_C_API bgfx_texture_handle_t bgfx_create_texture(const bgfx_memory_t* _mem, 
 BGFX_C_API bgfx_texture_handle_t bgfx_create_texture_2d(uint16_t _width, uint16_t _height, bool _hasMips, uint16_t _numLayers, bgfx_texture_format_t _format, uint64_t _flags, const bgfx_memory_t* _mem)
 {
 	union { bgfx_texture_handle_t c; bgfx::TextureHandle cpp; } handle_ret;
-	handle_ret.cpp = bgfx::createTexture2D(_width, _height, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, _flags, (const bgfx::Memory*)_mem);
+	handle_ret.cpp = bgfx::createTexture2D(_width, _height, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, 0, _flags, (const bgfx::Memory*)_mem);
 	return handle_ret.c;
 }
 
 BGFX_C_API bgfx_texture_handle_t bgfx_create_texture_2d_scaled(bgfx_backbuffer_ratio_t _ratio, bool _hasMips, uint16_t _numLayers, bgfx_texture_format_t _format, uint64_t _flags)
 {
 	union { bgfx_texture_handle_t c; bgfx::TextureHandle cpp; } handle_ret;
-	handle_ret.cpp = bgfx::createTexture2D((bgfx::BackbufferRatio::Enum)_ratio, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, _flags);
+	handle_ret.cpp = bgfx::createTexture2D((bgfx::BackbufferRatio::Enum)_ratio, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, 0, _flags);
 	return handle_ret.c;
 }
 
 BGFX_C_API bgfx_texture_handle_t bgfx_create_texture_3d(uint16_t _width, uint16_t _height, uint16_t _depth, bool _hasMips, bgfx_texture_format_t _format, uint64_t _flags, const bgfx_memory_t* _mem)
 {
 	union { bgfx_texture_handle_t c; bgfx::TextureHandle cpp; } handle_ret;
-	handle_ret.cpp = bgfx::createTexture3D(_width, _height, _depth, _hasMips, (bgfx::TextureFormat::Enum)_format, _flags, (const bgfx::Memory*)_mem);
+	handle_ret.cpp = bgfx::createTexture3D(_width, _height, _depth, _hasMips, (bgfx::TextureFormat::Enum)_format, 0, _flags, (const bgfx::Memory*)_mem);
 	return handle_ret.c;
 }
 
 BGFX_C_API bgfx_texture_handle_t bgfx_create_texture_cube(uint16_t _size, bool _hasMips, uint16_t _numLayers, bgfx_texture_format_t _format, uint64_t _flags, const bgfx_memory_t* _mem)
 {
 	union { bgfx_texture_handle_t c; bgfx::TextureHandle cpp; } handle_ret;
-	handle_ret.cpp = bgfx::createTextureCube(_size, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, _flags, (const bgfx::Memory*)_mem);
+	handle_ret.cpp = bgfx::createTextureCube(_size, _hasMips, _numLayers, (bgfx::TextureFormat::Enum)_format, 0, _flags, (const bgfx::Memory*)_mem);
 	return handle_ret.c;
 }
 

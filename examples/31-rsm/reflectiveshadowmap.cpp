@@ -313,13 +313,13 @@ public:
 			| BGFX_SAMPLER_V_CLAMP
 			;
 
-		m_gbufferTex[GBUFFER_RT_NORMAL] = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, tsFlags);
-		m_gbufferTex[GBUFFER_RT_COLOR]  = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, tsFlags);
-		m_gbufferTex[GBUFFER_RT_DEPTH]  = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::D32F,  tsFlags);
+		m_gbufferTex[GBUFFER_RT_NORMAL] = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, 0, tsFlags);
+		m_gbufferTex[GBUFFER_RT_COLOR]  = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, 0, tsFlags);
+		m_gbufferTex[GBUFFER_RT_DEPTH]  = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::D32F,  0, tsFlags);
 		m_gbuffer = bgfx::createFrameBuffer(BX_COUNTOF(m_gbufferTex), m_gbufferTex, true);
 
 		// Make light buffer
-		m_lightBufferTex = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, tsFlags);
+		m_lightBufferTex = bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::BGRA8, 0, tsFlags);
 		bgfx::TextureHandle lightBufferRTs[] =  {
 			m_lightBufferTex
 		};
@@ -342,6 +342,7 @@ public:
 				, false
 				, 1
 				, bgfx::TextureFormat::BGRA8
+				, 0
 				, rsmFlags
 				);
 
@@ -352,6 +353,7 @@ public:
 				, false
 				, 1
 				, bgfx::TextureFormat::D16
+				, 0
 				, BGFX_TEXTURE_RT /* | BGFX_SAMPLER_COMPARE_LEQUAL*/
 				);  // Note I'm not setting BGFX_SAMPLER_COMPARE_LEQUAL.  Why?
 					// Normally a PCF shadow map such as this requires a compare.  However, this sample also

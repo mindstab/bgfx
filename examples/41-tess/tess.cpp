@@ -705,6 +705,7 @@ public:
 			, mipcnt > 1
 			, 1
 			, bgfx::TextureFormat::RG32F
+			, 0
 			, BGFX_TEXTURE_NONE
 			, mem
 			);
@@ -725,6 +726,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::R16
+			, 0
 			, BGFX_TEXTURE_NONE
 			, bgfx::makeRef(dmap->m_data, dmap->m_size)
 			);

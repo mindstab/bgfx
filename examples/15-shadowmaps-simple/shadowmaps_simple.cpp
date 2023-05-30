@@ -287,6 +287,7 @@ public:
 							, false
 							, 1
 							, bgfx::TextureFormat::D16
+							, 0
 							, BGFX_TEXTURE_RT | BGFX_SAMPLER_COMPARE_LEQUAL
 							),
 					};
@@ -309,6 +310,7 @@ public:
 							, false
 							, 1
 							, bgfx::TextureFormat::BGRA8
+							, 0
 							, BGFX_TEXTURE_RT
 							),
 						bgfx::createTexture2D(
@@ -317,6 +319,7 @@ public:
 							, false
 							, 1
 							, bgfx::TextureFormat::D16
+							, 0
 							, BGFX_TEXTURE_RT_WRITE_ONLY
 							),
 					};

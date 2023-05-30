@@ -92,7 +92,7 @@ void StagingPool::grow(int count)
 {
 	while ((int)m_stagingTextures.size() < count)
 	{
-		auto stagingTexture = bgfx::createTexture2D((uint16_t)m_width, (uint16_t)m_height, false, 1, bgfx::TextureFormat::BGRA8, m_flags);
+		auto stagingTexture = bgfx::createTexture2D((uint16_t)m_width, (uint16_t)m_height, false, 1, bgfx::TextureFormat::BGRA8, 0, m_flags);
 		m_stagingTextures.push_back(stagingTexture);
 	}
 }
@@ -440,7 +440,7 @@ PageTable::PageTable(PageCache* _cache, VirtualTextureInfo* _info, PageIndexer* 
 {
 	auto size = m_info->GetPageTableSize();
 	m_quadtree = BX_NEW(VirtualTexture::getAllocator(), Quadtree)({ 0, 0, size, size }, (int)bx::log2((float)size));
-	m_texture = bgfx::createTexture2D((uint16_t)size, (uint16_t)size, true, 1, bgfx::TextureFormat::BGRA8, BGFX_SAMPLER_UVW_CLAMP | BGFX_SAMPLER_POINT | BGFX_TEXTURE_BLIT_DST);
+	m_texture = bgfx::createTexture2D((uint16_t)size, (uint16_t)size, true, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_SAMPLER_UVW_CLAMP | BGFX_SAMPLER_POINT | BGFX_TEXTURE_BLIT_DST);
 
 	_cache->added = [=](Page page, Point pt) { m_quadtreeDirty = true; m_quadtree->add(page, pt); };
 	_cache->removed = [=](Page page, Point pt) { m_quadtreeDirty = true; m_quadtree->remove(page); BX_UNUSED(pt); };
@@ -451,7 +451,7 @@ PageTable::PageTable(PageCache* _cache, VirtualTextureInfo* _info, PageIndexer* 
 	{
 		int  mipSize = m_info->GetPageTableSize() >> i;
 		auto simpleImage = BX_NEW(VirtualTexture::getAllocator(), SimpleImage)(mipSize, mipSize, s_channelCount);
-		auto stagingTexture = bgfx::createTexture2D((uint16_t)mipSize, (uint16_t)mipSize, false, 1, bgfx::TextureFormat::BGRA8, BGFX_SAMPLER_UVW_CLAMP | BGFX_SAMPLER_POINT);
+		auto stagingTexture = bgfx::createTexture2D((uint16_t)mipSize, (uint16_t)mipSize, false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_SAMPLER_UVW_CLAMP | BGFX_SAMPLER_POINT);
 		m_images.push_back(simpleImage);
 		m_stagingTextures.push_back(stagingTexture);
 	}
@@ -712,6 +712,7 @@ TextureAtlas::TextureAtlas(VirtualTextureInfo* _info, int _count, int _uploadspe
 		, false
 		, 1
 		, bgfx::TextureFormat::BGRA8
+		, 0
 		, BGFX_SAMPLER_UVW_CLAMP | BGFX_TEXTURE_BLIT_DST
 		);
 }
@@ -775,8 +776,8 @@ FeedbackBuffer::FeedbackBuffer(VirtualTextureInfo* _info, int _width, int _heigh
 	// Initialize feedback frame buffer
 	bgfx::TextureHandle feedbackFrameBufferTextures[] =
 	{
-		bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT),
-		bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::D32F,  BGFX_TEXTURE_RT),
+		bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT),
+		bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::D32F,  0, BGFX_TEXTURE_RT),
 	};
 
 	m_feedbackFrameBuffer = bgfx::createFrameBuffer(BX_COUNTOF(feedbackFrameBufferTextures), feedbackFrameBufferTextures, true);

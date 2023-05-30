@@ -256,7 +256,7 @@ namespace
 		const bgfx::Memory* mem = bgfx::alloc(4*4*4);
 		uint32_t* bgra8 = (uint32_t*)mem->data;
 		bx::memSet(bgra8, 0, 4*4*4);
-		gl->texMissing = bgfx::createTexture2D(4, 4, false, 1, bgfx::TextureFormat::BGRA8, 0, mem);
+		gl->texMissing = bgfx::createTexture2D(4, 4, false, 1, bgfx::TextureFormat::BGRA8, 0, 0, mem);
 
 		gl->u_scissorMat      = bgfx::createUniform("u_scissorMat",      bgfx::UniformType::Mat3);
 		gl->u_paintMat        = bgfx::createUniform("u_paintMat",        bgfx::UniformType::Mat3);
@@ -329,6 +329,7 @@ namespace
 						, false
 						, 1
 						, NVG_TEXTURE_RGBA == _type ? bgfx::TextureFormat::RGBA8 : bgfx::TextureFormat::R8
+						, 0
 						, BGFX_SAMPLER_NONE
 						);
 
@@ -1211,8 +1212,8 @@ NVGLUframebuffer* nvgluCreateFramebuffer(NVGcontext* _ctx, int32_t _width, int32
 	const uint16_t h = uint16_t(_height);
 	bgfx::TextureHandle textures[] =
 	{
-		bgfx::createTexture2D(w, h, false, 1, bgfx::TextureFormat::RGBA8, BGFX_TEXTURE_RT),
-		bgfx::createTexture2D(w, h, false, 1, bgfx::TextureFormat::D24S8, BGFX_TEXTURE_RT | BGFX_TEXTURE_RT_WRITE_ONLY)
+		bgfx::createTexture2D(w, h, false, 1, bgfx::TextureFormat::RGBA8, 0, BGFX_TEXTURE_RT),
+		bgfx::createTexture2D(w, h, false, 1, bgfx::TextureFormat::D24S8, 0, BGFX_TEXTURE_RT | BGFX_TEXTURE_RT_WRITE_ONLY)
 	};
 	bgfx::FrameBufferHandle fbh = bgfx::createFrameBuffer(
 		  BX_COUNTOF(textures)
@@ -1266,8 +1267,8 @@ NVGLUframebuffer* nvgluCreateFramebuffer(NVGcontext* _ctx, int32_t _imageFlags)
 	BX_UNUSED(_imageFlags);
 	bgfx::TextureHandle textures[] =
 	{
-		bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::RGBA8, BGFX_TEXTURE_RT),
-		bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::D24S8, BGFX_TEXTURE_RT | BGFX_TEXTURE_RT_WRITE_ONLY)
+		bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::RGBA8, 0, BGFX_TEXTURE_RT),
+		bgfx::createTexture2D(bgfx::BackbufferRatio::Equal, false, 1, bgfx::TextureFormat::D24S8, 0, BGFX_TEXTURE_RT | BGFX_TEXTURE_RT_WRITE_ONLY)
 	};
 	bgfx::FrameBufferHandle fbh = bgfx::createFrameBuffer(
 		  BX_COUNTOF(textures)

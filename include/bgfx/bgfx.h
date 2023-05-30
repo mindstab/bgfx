@@ -2733,6 +2733,7 @@ namespace bgfx
 	/// @param[in] _hasMips Indicates that texture contains full mip-map chain.
 	/// @param[in] _numLayers Number of layers in texture array.
 	/// @param[in] _format Texture format. See: `TextureFormat::Enum`.
+	/// @param[in] _numMips Number of mip-maps.
 	///
 	/// @attention C99's equivalent binding is `bgfx_calc_texture_size`.
 	///
@@ -2745,6 +2746,7 @@ namespace bgfx
 		, bool _hasMips
 		, uint16_t _numLayers
 		, TextureFormat::Enum _format
+		, uint8_t _numMips = 0
 		);
 
 	/// Create texture from memory buffer.
@@ -2778,6 +2780,7 @@ namespace bgfx
 	/// @param[in] _numLayers Number of layers in texture array. Must be 1 if caps
 	///   `BGFX_CAPS_TEXTURE_2D_ARRAY` flag is not set.
 	/// @param[in] _format Texture format. See: `TextureFormat::Enum`.
+	/// @param[in] _numMips Number of mip-maps.
 	/// @param[in] _flags Texture creation (see `BGFX_TEXTURE_*`.), and sampler (see `BGFX_SAMPLER_*`)
 	///   flags. Default texture sampling mode is linear, and wrap mode is repeat.
 	///   - `BGFX_SAMPLER_[U/V/W]_[MIRROR/CLAMP]` - Mirror or clamp to edge wrap
@@ -2797,6 +2800,7 @@ namespace bgfx
 		, bool     _hasMips
 		, uint16_t _numLayers
 		, TextureFormat::Enum _format
+		, uint8_t _numMips = 0
 		, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
 		, const Memory* _mem = NULL
 		);
@@ -2810,6 +2814,7 @@ namespace bgfx
 	/// @param[in] _numLayers Number of layers in texture array. Must be 1 if caps
 	///   `BGFX_CAPS_TEXTURE_2D_ARRAY` flag is not set.
 	/// @param[in] _format Texture format. See: `TextureFormat::Enum`.
+	/// @param[in] _numMips Number of mip-maps.
 	/// @param[in] _flags Texture creation (see `BGFX_TEXTURE_*`.), and sampler (see `BGFX_SAMPLER_*`)
 	///   flags. Default texture sampling mode is linear, and wrap mode is repeat.
 	///   - `BGFX_SAMPLER_[U/V/W]_[MIRROR/CLAMP]` - Mirror or clamp to edge wrap
@@ -2824,6 +2829,7 @@ namespace bgfx
 		, bool _hasMips
 		, uint16_t _numLayers
 		, TextureFormat::Enum _format
+		, uint8_t _numMips = 0
 		, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
 		);
 
@@ -2834,6 +2840,7 @@ namespace bgfx
 	/// @param[in] _depth Depth.
 	/// @param[in] _hasMips Indicates that texture contains full mip-map chain.
 	/// @param[in] _format Texture format. See: `TextureFormat::Enum`.
+	/// @param[in] _numMips Number of mip-maps.
 	/// @param[in] _flags Texture creation (see `BGFX_TEXTURE_*`.), and sampler (see `BGFX_SAMPLER_*`)
 	///   flags. Default texture sampling mode is linear, and wrap mode is repeat.
 	///   - `BGFX_SAMPLER_[U/V/W]_[MIRROR/CLAMP]` - Mirror or clamp to edge wrap
@@ -2852,6 +2859,7 @@ namespace bgfx
 		, uint16_t _depth
 		, bool _hasMips
 		, TextureFormat::Enum _format
+		, uint8_t _numMips = 0
 		, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
 		, const Memory* _mem = NULL
 		);
@@ -2863,6 +2871,7 @@ namespace bgfx
 	/// @param[in] _numLayers Number of layers in texture array. Must be 1 if caps
 	///   `BGFX_CAPS_TEXTURE_CUBE_ARRAY` flag is not set.
 	/// @param[in] _format Texture format. See: `TextureFormat::Enum`.
+	/// @param[in] _numMips Number of mip-maps.
 	/// @param[in] _flags Texture creation (see `BGFX_TEXTURE_*`.), and sampler (see `BGFX_SAMPLER_*`)
 	///   flags. Default texture sampling mode is linear, and wrap mode is repeat.
 	///   - `BGFX_SAMPLER_[U/V/W]_[MIRROR/CLAMP]` - Mirror or clamp to edge wrap
@@ -2881,6 +2890,7 @@ namespace bgfx
 		, bool _hasMips
 		, uint16_t _numLayers
 		, TextureFormat::Enum _format
+		, uint8_t _numMips = 0
 		, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
 		, const Memory* _mem = NULL
 		);
@@ -3559,7 +3569,7 @@ namespace bgfx
 		  uint64_t _state
 		, uint32_t _rgba = 0
 		);
-		
+
 	/// Set depth bias.
 	///
 	void setDepthBias(

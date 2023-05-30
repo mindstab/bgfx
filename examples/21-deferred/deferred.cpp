@@ -543,14 +543,14 @@ public:
 
 					if (m_useTArray)
 					{
-						m_gbufferTex[0] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 2, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT | tsFlags);
+						m_gbufferTex[0] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 2, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT | tsFlags);
 						gbufferAt[0].init(m_gbufferTex[0], bgfx::Access::Write, 0);
 						gbufferAt[1].init(m_gbufferTex[0], bgfx::Access::Write, 1);
 					}
 					else
 					{
-						m_gbufferTex[0] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT | tsFlags);
-						m_gbufferTex[1] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT | tsFlags);
+						m_gbufferTex[0] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT | tsFlags);
+						m_gbufferTex[1] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT | tsFlags);
 						gbufferAt[0].init(m_gbufferTex[0]);
 						gbufferAt[1].init(m_gbufferTex[1]);
 					}
@@ -561,7 +561,7 @@ public:
 						: bgfx::TextureFormat::D24
 						;
 
-					m_gbufferTex[2] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, depthFormat, BGFX_TEXTURE_RT | tsFlags);
+					m_gbufferTex[2] = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, depthFormat, 0, BGFX_TEXTURE_RT | tsFlags);
 					gbufferAt[2].init(m_gbufferTex[2]);
 
 					m_gbuffer = bgfx::createFrameBuffer(BX_COUNTOF(gbufferAt), gbufferAt, true);
@@ -580,11 +580,11 @@ public:
 
 					if (m_useUav)
 					{
-						m_lightBufferTex = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::RGBA8, BGFX_TEXTURE_COMPUTE_WRITE | tsFlags);
+						m_lightBufferTex = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::RGBA8, 0, BGFX_TEXTURE_COMPUTE_WRITE | tsFlags);
 					}
 					else
 					{
-						m_lightBufferTex = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT | tsFlags);
+						m_lightBufferTex = bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT | tsFlags);
 						m_lightBuffer = bgfx::createFrameBuffer(1, &m_lightBufferTex, true);
 					}
 				}

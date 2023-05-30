@@ -194,6 +194,7 @@ bgfx::TextureHandle loadTexture(bx::FileReaderI* _reader, const char* _filePath,
 					, 1 < imageContainer->m_numMips
 					, imageContainer->m_numLayers
 					, bgfx::TextureFormat::Enum(imageContainer->m_format)
+					, 0
 					, _flags
 					, mem
 					);
@@ -206,6 +207,7 @@ bgfx::TextureHandle loadTexture(bx::FileReaderI* _reader, const char* _filePath,
 					, uint16_t(imageContainer->m_depth)
 					, 1 < imageContainer->m_numMips
 					, bgfx::TextureFormat::Enum(imageContainer->m_format)
+					, 0
 					, _flags
 					, mem
 					);
@@ -218,6 +220,7 @@ bgfx::TextureHandle loadTexture(bx::FileReaderI* _reader, const char* _filePath,
 					, 1 < imageContainer->m_numMips
 					, imageContainer->m_numLayers
 					, bgfx::TextureFormat::Enum(imageContainer->m_format)
+					, 0
 					, _flags
 					, mem
 					);

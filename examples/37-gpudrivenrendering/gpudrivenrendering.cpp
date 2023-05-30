@@ -514,7 +514,7 @@ public:
 			// Create buffers for the HiZ pass
 			m_hiZDepthBuffer = bgfx::createFrameBuffer(uint16_t(m_hiZwidth), uint16_t(m_hiZheight), bgfx::TextureFormat::D32F, tsFlags);
 
-			bgfx::TextureHandle buffer = bgfx::createTexture2D(uint16_t(m_hiZwidth), uint16_t(m_hiZheight), true, 1, bgfx::TextureFormat::R32F, BGFX_TEXTURE_COMPUTE_WRITE | tsFlags);
+			bgfx::TextureHandle buffer = bgfx::createTexture2D(uint16_t(m_hiZwidth), uint16_t(m_hiZheight), true, 1, bgfx::TextureFormat::R32F, 0, BGFX_TEXTURE_COMPUTE_WRITE | tsFlags);
 			m_hiZBuffer = bgfx::createFrameBuffer(1, &buffer, true);
 
 			//how many mip will the Hi Z buffer have?
