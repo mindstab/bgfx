@@ -2934,7 +2934,7 @@ namespace bgfx { namespace d3d11
 			}
 		}
 
-		void setRasterizerState(uint64_t _state, bool _wireframe = false, bool _scissor = false)
+		void setRasterizerState(uint64_t _state, bool _wireframe = false, bool _scissor = false, int8_t _depth_bias = 0)
 		{
 			_state &= 0
 				| BGFX_STATE_CULL_MASK
@@ -2945,6 +2945,8 @@ namespace bgfx { namespace d3d11
 				;
 			_state |= _wireframe ? BGFX_STATE_PT_LINES : BGFX_STATE_NONE;
 			_state |= _scissor   ? BGFX_STATE_RESERVED_MASK : 0;
+			// reuse free space to store depth bias
+			_state |= static_cast<uint64_t>(_depth_bias) << BGFX_STATE_ALPHA_REF_SHIFT;
 			_state &= ~(m_deviceInterfaceVersion >= 3 ? 0 : BGFX_STATE_CONSERVATIVE_RASTER);
 
 			ID3D11RasterizerState* rs = m_rasterizerStateCache.find(_state);
@@ -2959,7 +2961,7 @@ namespace bgfx { namespace d3d11
 					desc.FillMode = _wireframe ? D3D11_FILL_WIREFRAME : D3D11_FILL_SOLID;
 					desc.CullMode = s_cullMode[cull];
 					desc.FrontCounterClockwise = !!(_state&BGFX_STATE_FRONT_CCW);
-					desc.DepthBias             = 0;
+					desc.DepthBias             = _depth_bias;
 					desc.DepthBiasClamp        = 0.0f;
 					desc.SlopeScaledDepthBias  = 0.0f;
 					desc.DepthClipEnable       = !m_depthClamp;
@@ -2982,7 +2984,7 @@ namespace bgfx { namespace d3d11
 					desc.FillMode = _wireframe ? D3D11_FILL_WIREFRAME : D3D11_FILL_SOLID;
 					desc.CullMode = s_cullMode[cull];
 					desc.FrontCounterClockwise = false;
-					desc.DepthBias             = 0;
+					desc.DepthBias             = _depth_bias;
 					desc.DepthBiasClamp        = 0.0f;
 					desc.SlopeScaledDepthBias  = 0.0f;
 					desc.DepthClipEnable       = !m_depthClamp;
@@ -6000,7 +6002,7 @@ namespace bgfx { namespace d3d11
 						deviceCtx->RSSetScissorRects(1, &rc);
 					}
 
-					setRasterizerState(newFlags, wireframe, scissorEnabled);
+					setRasterizerState(newFlags, wireframe, scissorEnabled, draw.m_depth_bias);
 				}
 
 				if (BGFX_D3D11_DEPTH_STENCIL_MASK & changedFlags)
@@ -6033,7 +6035,7 @@ namespace bgfx { namespace d3d11
 						 | BGFX_STATE_CONSERVATIVE_RASTER
 						 ) & changedFlags)
 					{
-						setRasterizerState(newFlags, wireframe, scissorEnabled);
+						setRasterizerState(newFlags, wireframe, scissorEnabled, draw.m_depth_bias);
 					}
 
 					if (BGFX_STATE_ALPHA_REF_MASK & changedFlags)

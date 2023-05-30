@@ -1721,6 +1721,7 @@ namespace bgfx
 				m_stencil       = packStencil(BGFX_STENCIL_DEFAULT, BGFX_STENCIL_DEFAULT);
 				m_rgba          = 0;
 				m_scissor       = UINT16_MAX;
+				m_depth_bias	= 0;
 			}
 
 			if (0 != (_flags & BGFX_DISCARD_TRANSFORM) )
@@ -1799,6 +1800,7 @@ namespace bgfx
 		uint8_t  m_submitFlags;
 		uint8_t  m_streamMask;
 		uint8_t  m_uniformIdx;
+		int8_t   m_depth_bias;
 
 		IndexBufferHandle    m_indexBuffer;
 		VertexBufferHandle   m_instanceDataBuffer;
@@ -2536,6 +2538,11 @@ namespace bgfx
 
 			m_draw.m_stateFlags = _state;
 			m_draw.m_rgba       = _rgba;
+		}
+		
+		void setDepthBias(int8_t _depth_bias)
+		{
+			m_draw.m_depth_bias = _depth_bias;
 		}
 
 		void setCondition(OcclusionQueryHandle _handle, bool _visible)
