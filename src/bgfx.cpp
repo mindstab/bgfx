@@ -683,6 +683,7 @@ namespace bgfx
 		charsetFillTexture(vga8x8, rgba, 8, pitch, bpp);
 		charsetFillTexture(vga8x16, &rgba[8*pitch], 16, pitch, bpp);
 		m_texture = createTexture2D(width, height, false, 1, TextureFormat::R8
+			, 0
 			, BGFX_SAMPLER_MIN_POINT
 			| BGFX_SAMPLER_MAG_POINT
 			| BGFX_SAMPLER_MIP_POINT
@@ -4814,9 +4815,9 @@ namespace bgfx
 			);
 	}
 
-	void calcTextureSize(TextureInfo& _info, uint16_t _width, uint16_t _height, uint16_t _depth, bool _cubeMap, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format)
+	void calcTextureSize(TextureInfo& _info, uint16_t _width, uint16_t _height, uint16_t _depth, bool _cubeMap, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint8_t _numMips)
 	{
-		bimg::imageGetSize( (bimg::TextureInfo*)&_info, _width, _height, _depth, _cubeMap, _hasMips, _numLayers, bimg::TextureFormat::Enum(_format) );
+		bimg::imageGetSize( (bimg::TextureInfo*)&_info, _width, _height, _depth, _cubeMap, _hasMips, _numLayers, bimg::TextureFormat::Enum(_format), _numMips );
 	}
 
 	TextureHandle createTexture(const Memory* _mem, uint64_t _flags, uint8_t _skip, TextureInfo* _info)
@@ -4843,7 +4844,7 @@ namespace bgfx
 		_height = bx::max<uint16_t>(1, _height);
 	}
 
-	static TextureHandle createTexture2D(BackbufferRatio::Enum _ratio, uint16_t _width, uint16_t _height, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint64_t _flags, const Memory* _mem)
+	static TextureHandle createTexture2D(BackbufferRatio::Enum _ratio, uint16_t _width, uint16_t _height, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint8_t _numMips, uint64_t _flags, const Memory* _mem)
 	{
 		if (BackbufferRatio::Count != _ratio)
 		{
@@ -4860,14 +4861,14 @@ namespace bgfx
 			return BGFX_INVALID_HANDLE;
 		}
 
-		const uint8_t numMips = calcNumMips(_hasMips, _width, _height);
+		const uint8_t numMips = _numMips > 0 ? _numMips : calcNumMips(_hasMips, _width, _height);
 		_numLayers = bx::max<uint16_t>(_numLayers, 1);
 
 		if (BX_ENABLED(BGFX_CONFIG_DEBUG)
 		&&  NULL != _mem)
 		{
 			TextureInfo ti;
-			calcTextureSize(ti, _width, _height, 1, false, _hasMips, _numLayers, _format);
+			calcTextureSize(ti, _width, _height, 1, false, _hasMips, _numLayers, _format, _numMips);
 			BX_ASSERT(ti.storageSize == _mem->size
 				, "createTexture2D: Texture storage size doesn't match passed memory size (storage size: %d, memory size: %d)"
 				, ti.storageSize
@@ -4896,19 +4897,19 @@ namespace bgfx
 		return s_ctx->createTexture(mem, _flags, 0, NULL, _ratio, NULL != _mem);
 	}
 
-	TextureHandle createTexture2D(uint16_t _width, uint16_t _height, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint64_t _flags, const Memory* _mem)
+	TextureHandle createTexture2D(uint16_t _width, uint16_t _height, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint8_t _numMips, uint64_t _flags, const Memory* _mem)
 	{
 		BX_ASSERT(_width > 0 && _height > 0, "Invalid texture size (width %d, height %d).", _width, _height);
-		return createTexture2D(BackbufferRatio::Count, _width, _height, _hasMips, _numLayers, _format, _flags, _mem);
+		return createTexture2D(BackbufferRatio::Count, _width, _height, _hasMips, _numLayers, _format, _numMips, _flags, _mem);
 	}
 
-	TextureHandle createTexture2D(BackbufferRatio::Enum _ratio, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint64_t _flags)
+	TextureHandle createTexture2D(BackbufferRatio::Enum _ratio, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint8_t _numMips, uint64_t _flags)
 	{
 		BX_ASSERT(_ratio < BackbufferRatio::Count, "Invalid back buffer ratio.");
-		return createTexture2D(_ratio, 0, 0, _hasMips, _numLayers, _format, _flags, NULL);
+		return createTexture2D(_ratio, 0, 0, _hasMips, _numLayers, _format, _numMips, _flags, NULL);
 	}
 
-	TextureHandle createTexture3D(uint16_t _width, uint16_t _height, uint16_t _depth, bool _hasMips, TextureFormat::Enum _format, uint64_t _flags, const Memory* _mem)
+	TextureHandle createTexture3D(uint16_t _width, uint16_t _height, uint16_t _depth, bool _hasMips, TextureFormat::Enum _format, uint8_t _numMips, uint64_t _flags, const Memory* _mem)
 	{
 		bx::ErrorAssert err;
 		isTextureValid(_width, _height, _depth, false, 1, _format, _flags, &err);
@@ -4918,13 +4919,13 @@ namespace bgfx
 			return BGFX_INVALID_HANDLE;
 		}
 
-		const uint8_t numMips = calcNumMips(_hasMips, _width, _height, _depth);
+		const uint8_t numMips = _numMips > 0 ? _numMips : calcNumMips(_hasMips, _width, _height, _depth);
 
 		if (BX_ENABLED(BGFX_CONFIG_DEBUG)
 		&&  NULL != _mem)
 		{
 			TextureInfo ti;
-			calcTextureSize(ti, _width, _height, _depth, false, _hasMips, 1, _format);
+			calcTextureSize(ti, _width, _height, _depth, false, _hasMips, 1, _format, _numMips);
 			BX_ASSERT(ti.storageSize == _mem->size
 				, "createTexture3D: Texture storage size doesn't match passed memory size (storage size: %d, memory size: %d)"
 				, ti.storageSize
@@ -4953,7 +4954,7 @@ namespace bgfx
 		return s_ctx->createTexture(mem, _flags, 0, NULL, BackbufferRatio::Count, NULL != _mem);
 	}
 
-	TextureHandle createTextureCube(uint16_t _size, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint64_t _flags, const Memory* _mem)
+	TextureHandle createTextureCube(uint16_t _size, bool _hasMips, uint16_t _numLayers, TextureFormat::Enum _format, uint8_t _numMips, uint64_t _flags, const Memory* _mem)
 	{
 		bx::ErrorAssert err;
 		isTextureValid(_size, _size, 0, true, _numLayers, _format, _flags, &err);
@@ -4963,14 +4964,14 @@ namespace bgfx
 			return BGFX_INVALID_HANDLE;
 		}
 
-		const uint8_t numMips = calcNumMips(_hasMips, _size, _size);
+		const uint8_t numMips = _numMips > 0 ? _numMips : calcNumMips(_hasMips, _size, _size);
 		_numLayers = bx::max<uint16_t>(_numLayers, 1);
 
 		if (BX_ENABLED(BGFX_CONFIG_DEBUG)
 		&&  NULL != _mem)
 		{
 			TextureInfo ti;
-			calcTextureSize(ti, _size, _size, 1, true, _hasMips, _numLayers, _format);
+			calcTextureSize(ti, _size, _size, 1, true, _hasMips, _numLayers, _format, _numMips);
 			BX_ASSERT(ti.storageSize == _mem->size
 				, "createTextureCube: Texture storage size doesn't match passed memory size (storage size: %d, memory size: %d)"
 				, ti.storageSize

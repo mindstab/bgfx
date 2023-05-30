@@ -84,6 +84,7 @@ public:
 
 		m_textureStipple = bgfx::createTexture2D(8, 4, false, 1
 			, bgfx::TextureFormat::R8
+			, 0
 			, BGFX_SAMPLER_MAG_POINT|BGFX_SAMPLER_MIN_POINT
 			, stippleTex
 			);

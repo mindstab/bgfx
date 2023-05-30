@@ -206,7 +206,7 @@ public:
 		m_lumBgra8 = 0;
 		if ( (BGFX_CAPS_TEXTURE_BLIT|BGFX_CAPS_TEXTURE_READ_BACK) == (bgfx::getCaps()->supported & (BGFX_CAPS_TEXTURE_BLIT|BGFX_CAPS_TEXTURE_READ_BACK) ) )
 		{
-			m_rb = bgfx::createTexture2D(1, 1, false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_BLIT_DST|BGFX_TEXTURE_READ_BACK);
+			m_rb = bgfx::createTexture2D(1, 1, false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_BLIT_DST|BGFX_TEXTURE_READ_BACK);
 		}
 		else
 		{
@@ -305,6 +305,7 @@ public:
 					, false
 					, 1
 					, bgfx::TextureFormat::BGRA8
+					, 0
 					, (uint64_t(msaa + 1) << BGFX_TEXTURE_RT_MSAA_SHIFT) | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 					);
 
@@ -322,6 +323,7 @@ public:
 					, false
 					, 1
 					, depthFormat
+					, 0
 					, textureFlags
 					);
 

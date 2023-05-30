@@ -225,6 +225,7 @@ static void textureSetPopulateCompressedFormat(TextureSet& textureSet, bimg::Ima
 		, false
 		, 1
 		, bgfx::TextureFormat::Enum(mip0.m_format)
+		, 0
 		, BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT
 		, bgfx::copy(mip0.m_data, mip0.m_size)
 		);
@@ -314,6 +315,7 @@ static void textureSetPopulateUncompressedFormats(TextureSet& textureSet, bimg::
 			, info.numMips > 1
 			, info.numLayers
 			, bgfx::TextureFormat::Enum(info.format)
+			, 0
 			, flags
 			, mem
 			);
@@ -472,6 +474,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::RGBA8
+			, 0
 			, BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT
 			, checkerboardImageMemory
 			);

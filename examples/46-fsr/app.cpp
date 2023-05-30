@@ -212,7 +212,7 @@ struct RenderTarget
 	{
 		m_width   = _width;
 		m_height  = _height;
-		m_texture = bgfx::createTexture2D(uint16_t(_width), uint16_t(_height), false, 1, _format, _flags);
+		m_texture = bgfx::createTexture2D(uint16_t(_width), uint16_t(_height), false, 1, _format, 0, _flags);
 		m_buffer  = bgfx::createFrameBuffer(1, &m_texture, true);
 	}
 
@@ -342,6 +342,7 @@ private:
 			, false
 			, 1
 			, bgfx::TextureFormat::BGRA8
+			, 0
 			, BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT | BGFX_SAMPLER_U_CLAMP | BGFX_SAMPLER_V_CLAMP
 			, mem
 			);
@@ -804,6 +805,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::RGBA16F
+			, 0
 			, colorFlags
 			);
 
@@ -813,6 +815,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::D32F
+			, 0
 			, depthFlags
 			);
 

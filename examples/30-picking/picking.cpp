@@ -119,7 +119,7 @@ public:
 		m_timeOffset = bx::getHPCounter();
 
 		// Set up ID buffer, which has a color target and depth buffer
-		m_pickingRT = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+		m_pickingRT = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0, 0
 			| BGFX_TEXTURE_RT
 			| BGFX_SAMPLER_MIN_POINT
 			| BGFX_SAMPLER_MAG_POINT
@@ -127,7 +127,7 @@ public:
 			| BGFX_SAMPLER_U_CLAMP
 			| BGFX_SAMPLER_V_CLAMP
 			);
-		m_pickingRTDepth = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::D32F, 0
+		m_pickingRTDepth = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::D32F, 0, 0
 			| BGFX_TEXTURE_RT
 			| BGFX_SAMPLER_MIN_POINT
 			| BGFX_SAMPLER_MAG_POINT
@@ -140,7 +140,7 @@ public:
 		// Impossible to read directly from a render target, you *must* blit to a CPU texture
 		// first. Algorithm Overview: Render on GPU -> Blit to CPU texture -> Read from CPU
 		// texture.
-		m_blitTex = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0
+		m_blitTex = bgfx::createTexture2D(ID_DIM, ID_DIM, false, 1, bgfx::TextureFormat::RGBA8, 0, 0
 			| BGFX_TEXTURE_BLIT_DST
 			| BGFX_TEXTURE_READ_BACK
 			| BGFX_SAMPLER_MIN_POINT

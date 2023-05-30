@@ -402,9 +402,9 @@ public:
 
 					bgfx::TextureHandle gbufferTex[] =
 					{
-						bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::RGBA32F, tsFlags),
+						bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::RGBA32F, 0, tsFlags),
 						bgfx::getTexture(m_texChainFb[0]),
-						bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::D32F, tsFlags),
+						bgfx::createTexture2D(uint16_t(m_width), uint16_t(m_height), false, 1, bgfx::TextureFormat::D32F, 0, tsFlags),
 					};
 
 					m_gbuffer = bgfx::createFrameBuffer(BX_COUNTOF(gbufferTex), gbufferTex, true);

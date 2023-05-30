@@ -390,6 +390,7 @@ struct OcornutImguiContext
 			, 1
 			, bgfx::TextureFormat::BGRA8
 			, 0
+			, 0
 			, bgfx::copy(data, width*height*4)
 			);
 

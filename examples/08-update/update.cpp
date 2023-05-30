@@ -169,6 +169,7 @@ bgfx::TextureHandle loadTextureWithUpdate(const char* _filePath, uint64_t _flags
 					, 1 < imageContainer->m_numMips
 					, imageContainer->m_numLayers
 					, bgfx::TextureFormat::Enum(imageContainer->m_format)
+					, 0
 					, _flags
 					, NULL
 					);
@@ -325,17 +326,17 @@ public:
 
 			if (0 != (BGFX_CAPS_FORMAT_TEXTURE_3D & caps->formats[bgfx::TextureFormat::R8]) )
 			{
-				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R8,   BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem8);
+				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R8,   0, BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem8);
 			}
 
 			if (0 != (BGFX_CAPS_FORMAT_TEXTURE_3D & caps->formats[bgfx::TextureFormat::R16F]) )
 			{
-				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R16F, BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem16f);
+				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R16F, 0, BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem16f);
 			}
 
 			if (0 != (BGFX_CAPS_FORMAT_TEXTURE_3D & caps->formats[bgfx::TextureFormat::R32F]) )
 			{
-				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R32F, BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem32f);
+				m_textures3d[m_numTextures3d++] = bgfx::createTexture3D(32, 32, 32, false, bgfx::TextureFormat::R32F, 0, BGFX_SAMPLER_U_CLAMP|BGFX_SAMPLER_V_CLAMP|BGFX_SAMPLER_W_CLAMP, mem32f);
 			}
 		}
 
@@ -379,6 +380,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::BGRA8
+			, 0
 			, BGFX_SAMPLER_MIN_POINT|BGFX_SAMPLER_MAG_POINT|BGFX_SAMPLER_MIP_POINT
 			);
 
@@ -389,6 +391,7 @@ public:
 				, false
 				, 1
 				, bgfx::TextureFormat::BGRA8
+				, 0
 				, BGFX_SAMPLER_MIN_POINT|BGFX_SAMPLER_MAG_POINT|BGFX_SAMPLER_MIP_POINT|BGFX_TEXTURE_BLIT_DST
 				);
 		}
@@ -400,12 +403,13 @@ public:
 				, false
 				, 1
 				, bgfx::TextureFormat::RGBA8
+				, 0
 				, BGFX_TEXTURE_COMPUTE_WRITE
 				);
 		}
 
 		{
-			m_textureCube[3] = bgfx::createTextureCube(kTextureSide, false, 1, bgfx::TextureFormat::BGRA8, BGFX_TEXTURE_RT);
+			m_textureCube[3] = bgfx::createTextureCube(kTextureSide, false, 1, bgfx::TextureFormat::BGRA8, 0, BGFX_TEXTURE_RT);
 
 			for (uint32_t ii = 0; ii < BX_COUNTOF(m_textureCubeFaceFb); ++ii)
 			{
@@ -421,6 +425,7 @@ public:
 			, false
 			, 1
 			, bgfx::TextureFormat::BGRA8
+			, 0
 			, BGFX_SAMPLER_MIN_POINT|BGFX_SAMPLER_MAG_POINT|BGFX_SAMPLER_MIP_POINT
 			);
 
@@ -428,9 +433,9 @@ public:
 
 		if (m_blitSupported)
 		{
-			m_blitTestA = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, BGFX_TEXTURE_BLIT_DST);
-			m_blitTestB = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, BGFX_TEXTURE_BLIT_DST);
-			m_blitTestC = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, BGFX_TEXTURE_BLIT_DST);
+			m_blitTestA = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, 0, BGFX_TEXTURE_BLIT_DST);
+			m_blitTestB = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, 0, BGFX_TEXTURE_BLIT_DST);
+			m_blitTestC = bgfx::createTexture2D(16, 16, false, 1, bgfx::TextureFormat::Enum::RGBA8, 0, BGFX_TEXTURE_BLIT_DST);
 			bgfx::setName(m_blitTestA, "Blit A");
 			bgfx::setName(m_blitTestB, "Blit B");
 			bgfx::setName(m_blitTestC, "Blit C");
