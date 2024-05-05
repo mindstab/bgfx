@@ -114,6 +114,7 @@ static bimg::ImageContainer* generateHueWheelImage()
 		kTextureSize,
 		1,
 		1,
+		0,
 		false,
 		false,
 		NULL
