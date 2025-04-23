@@ -131,6 +131,18 @@ namespace bgfx
 		, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
 		);
 
+	/// Gets the internal bgfx context.
+	///
+	/// @returns Bgfx context.
+	///
+	uintptr_t getBgfxContext();
+
+	/// Sets the internal bgfx context.
+	///
+	/// @param[in] _bgfxContext Bgfx context.
+	///
+	void setBgfxContext(uintptr_t _bgfxContext);
+
 } // namespace bgfx
 
 #endif // BGFX_PLATFORM_H_HEADER_GUARD

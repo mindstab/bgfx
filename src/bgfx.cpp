@@ -302,6 +302,22 @@ namespace bgfx
 	PlatformData g_platformData;
 	bool g_platformDataChangedSinceReset = false;
 
+	struct BgfxContext {
+		CallbackStub* callbackStub;
+		AllocatorStub* allocatorStub;
+		bool graphicsDebuggerPresent;
+		CallbackI* callback;
+		bx::AllocatorI* allocator;
+		Caps caps;
+		Context* ctx;
+		bool renderFrameCalled;
+		InternalData internalData;
+		PlatformData platformData;
+		bool platformDataChangedSinceReset;
+		uint32_t threadIndex;
+	};
+	static BgfxContext s_bgfxCtx;
+
 	static Handle::TypeName s_typeName[] =
 	{
 		{ "DIB",  "DynamicIndexBuffer"  },
@@ -412,6 +428,38 @@ namespace bgfx
 		release(mem);
 
 		return rci->getInternal(_handle);
+	}
+
+	uintptr_t getBgfxContext() {
+		s_bgfxCtx.callbackStub = s_callbackStub;
+		s_bgfxCtx.allocatorStub = s_allocatorStub;
+		s_bgfxCtx.graphicsDebuggerPresent = s_graphicsDebuggerPresent;
+		s_bgfxCtx.callback = g_callback;
+		s_bgfxCtx.allocator = g_allocator;
+		bx::memCopy(&s_bgfxCtx.caps, &g_caps, sizeof(Caps));
+		s_bgfxCtx.ctx = s_ctx;
+		s_bgfxCtx.renderFrameCalled = s_renderFrameCalled;
+		bx::memCopy(&s_bgfxCtx.internalData, &g_internalData, sizeof(InternalData));
+		bx::memCopy(&s_bgfxCtx.platformData, &g_platformData, sizeof(PlatformData));
+		s_bgfxCtx.platformDataChangedSinceReset = g_platformDataChangedSinceReset;
+		s_bgfxCtx.threadIndex = s_threadIndex;
+		return (uintptr_t)&s_bgfxCtx;
+	}
+
+	void setBgfxContext(uintptr_t _bgfxContext) {
+		auto bgfxContext = (BgfxContext*)_bgfxContext;
+		s_callbackStub = bgfxContext->callbackStub;
+		s_allocatorStub = bgfxContext->allocatorStub;
+		s_graphicsDebuggerPresent = bgfxContext->graphicsDebuggerPresent;
+		g_callback = bgfxContext->callback;
+		g_allocator = bgfxContext->allocator;
+		bx::memCopy(&g_caps, &bgfxContext->caps, sizeof(Caps));
+		s_ctx = bgfxContext->ctx;
+		s_renderFrameCalled = bgfxContext->renderFrameCalled;
+		bx::memCopy(&g_internalData, &bgfxContext->internalData, sizeof(InternalData));
+		bx::memCopy(&g_platformData, &bgfxContext->platformData, sizeof(PlatformData));
+		g_platformDataChangedSinceReset = bgfxContext->platformDataChangedSinceReset;
+		s_threadIndex = bgfxContext->threadIndex;
 	}
 
 	void setGraphicsDebuggerPresent(bool _present)
